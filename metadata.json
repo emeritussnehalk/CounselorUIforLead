@@ -1,0 +1,6 @@
+{
+  "name": "SFDC Lead Counsellor UX",
+  "description": "Salesforce Lead Counsellor workspace designed around the sales conversation, featuring an optimized low-scroll Master-Detail Lead Details navigator, Document verification & UGC compliance archive, and comprehensive Payments & EMI financing ledger.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
