@@ -321,13 +321,31 @@
             <button type="button" onclick="open360DetailsModal('signals'); closeLeadActivityNotifications();" class="flex w-full items-center justify-center gap-1 border-t border-[#DDDBDA] px-3 py-2 text-[10px] font-semibold text-[#0176D3] hover:bg-[#F8FBFE] cursor-pointer">View marketing signals <span aria-hidden="true">→</span></button>
           </section>
         </div>
-        <button type="button" class="hidden sm:flex items-center gap-2.5 hover:text-[#0176D3] transition" title="User menu" aria-label="User menu">
-          <span class="w-7 h-7 rounded-full bg-[#8CA0B3] border border-[#5C7085] text-white flex items-center justify-center shadow-xs">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a4.5 4.5 0 100-9 4.5 4.5 0 000 9zm0 2c-4.42 0-8 2.24-8 5v2h16v-2c0-2.76-3.58-5-8-5z"/></svg>
-          </span>
-          <span class="hidden lg:inline text-sm font-medium tracking-wide whitespace-nowrap">Bengaluru Kammanahalli</span>
-          <svg class="hidden lg:block w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 9l6 6 6-6"/></svg>
-        </button>
+        <div class="relative hidden sm:block" id="userViewMenuArea">
+          <button type="button" id="userViewMenuButton" onclick="toggleUserViewMenu()" class="flex items-center gap-2.5 rounded px-1 py-0.5 hover:text-[#0176D3] hover:bg-[#F3F3F3] transition cursor-pointer" title="Select user view" aria-label="Select user view" aria-controls="userViewMenu" aria-expanded="false">
+            <span class="w-7 h-7 rounded-full bg-[#8CA0B3] border border-[#5C7085] text-white flex items-center justify-center shadow-xs">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a4.5 4.5 0 100-9 4.5 4.5 0 0012 0zm0 2c-4.42 0-8 2.24-8 5v2h16v-2c0-2.76-3.58-5-8-5z"/></svg>
+            </span>
+            <span class="hidden lg:inline text-sm font-medium tracking-wide whitespace-nowrap" id="activeUserViewLabel">SP · 1st Call View</span>
+            <svg class="hidden lg:block w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 9l6 6 6-6"/></svg>
+          </button>
+
+          <div id="userViewMenu" class="hidden absolute right-0 top-10 z-50 w-60 overflow-hidden rounded border border-[#DDDBDA] bg-white py-1 shadow-lg" role="menu" aria-label="Available user views">
+            <p class="px-3 py-1.5 text-[9px] font-semibold uppercase tracking-wide text-[#706E6B]">Switch user view</p>
+            <button type="button" data-user-view="SP · 1st Call View" onclick="selectUserView('SP · 1st Call View')" class="flex w-full items-center gap-2.5 bg-[#F8FBFE] px-3 py-2 text-left text-[11px] font-medium text-[#0176D3] hover:bg-[#EAF5FE] cursor-pointer" role="menuitem" aria-current="true">
+              <span class="flex h-5 w-5 items-center justify-center rounded bg-[#0176D3] text-[9px] font-bold text-white">SP</span>
+              <span>SP · 1st Call View</span>
+            </button>
+            <button type="button" data-user-view="SP · Subsequent Call View" onclick="selectUserView('SP · Subsequent Call View')" class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-[11px] font-medium text-[#514F4D] hover:bg-[#F8F9FA] cursor-pointer" role="menuitem">
+              <span class="flex h-5 w-5 items-center justify-center rounded bg-[#5867DD] text-[9px] font-bold text-white">SP</span>
+              <span>SP · Subsequent Call View</span>
+            </button>
+            <button type="button" data-user-view="RO / Other Users View" onclick="selectUserView('RO / Other Users View')" class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-[11px] font-medium text-[#514F4D] hover:bg-[#F8F9FA] cursor-pointer" role="menuitem">
+              <span class="flex h-5 w-5 items-center justify-center rounded bg-[#706E6B] text-[9px] font-bold text-white">RO</span>
+              <span>RO / Other Users View</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -528,7 +546,7 @@
                 <span>Bengaluru, Karnataka</span>
               </span>
               <span class="hidden sm:block h-3 w-px bg-[#DDDBDA]"></span>
-              <span class="inline-flex items-center gap-1.5"><span class="text-[10px] font-bold uppercase tracking-wide text-[#706E6B]">Lead ID</span><strong class="font-mono text-[#514F4D]" id="leadId">00Q5g0000049219</strong></span>
+              <span class="inline-flex items-center gap-1.5"><span class="text-[10px] font-bold uppercase tracking-wide text-[#706E6B]">Registration No.</span><strong class="font-mono text-[#514F4D]" id="leadId">VITREG012345678</strong></span>
             </div>
           </div>
 
@@ -537,13 +555,6 @@
         <!-- Action Button Group (SLDS Actions) -->
         <div class="slds-page-header__col-actions shrink-0 pt-1 lg:pt-0">
           <ul class="slds-button-group-list flex flex-wrap items-center gap-2">
-            <li class="flex items-center rounded border border-[#DDDBDA] bg-[#F8F9FA] p-0.5" aria-label="Call experience mode">
-              <span class="hidden xl:inline px-1.5 text-[10px] font-semibold uppercase tracking-wide text-[#706E6B]">Call UX</span>
-              <span class="hidden" id="currentUxModeLabel">First Call UX</span>
-              <button type="button" id="toggleFirstCallBtn" onclick="switchUxMode('first_call')" class="slds-button slds-button_brand rounded px-2.5 py-1 text-[11px] font-semibold cursor-pointer transition" title="Show the first call experience">First call</button>
-              <button type="button" id="toggleSubsequentBtn" onclick="switchUxMode('subsequent_call')" class="slds-button slds-button_neutral rounded border-0 bg-transparent px-2.5 py-1 text-[11px] font-semibold text-[#514F4D] hover:bg-white cursor-pointer transition" title="Show the subsequent call experience">Subsequent call</button>
-              <span class="ml-1 hidden items-center gap-1 border-l border-[#DDDBDA] px-1.5 text-[10px] text-[#706E6B] sm:inline-flex" title="Human-connected calls"><span class="hidden 2xl:inline">Connected</span><span id="connectedCallCountDisplay" class="font-mono font-semibold text-[#181818]">0</span></span>
-            </li>
             <li>
               <button 
                 type="button" 
@@ -590,11 +601,30 @@
 
       </div>
 
-      <!-- Highlights Detail Row (SLDS Highlights Panel) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 xl:gap-6 mt-4 pt-4 border-t border-[#DDDBDA] text-xs">
+      <!-- SP workspace: 360° decision summary with key lead highlights -->
+      <div class="mt-4 grid grid-cols-1 gap-4 border-t border-[#DDDBDA] pt-4 xl:grid-cols-[minmax(420px,1.15fr)_minmax(0,1fr)]" id="spLeadInsightsLayout">
+        <button type="button" id="spLead360Summary" onclick="open360DetailsModal('all')" class="group rounded border border-[#D8E9F8] bg-[#F8FBFE] p-3 text-left transition hover:border-[#0176D3] hover:shadow-xs cursor-pointer" aria-label="Open all Lead 360 intelligence views">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex min-w-0 items-center gap-2.5">
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-[#0176D3] text-white shadow-2xs">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6m3 6V7m3 10v-3M5 19h14"/></svg>
+              </span>
+              <div class="min-w-0">
+                <h2 class="text-xs font-bold uppercase tracking-wide text-[#080707]">Lead 360&deg; Intelligence</h2>
+                <p class="mt-0.5 text-[10px] text-[#706E6B]" id="spLead360SummaryMeta">First-call context from 7 intelligence views</p>
+              </div>
+            </div>
+            <span class="shrink-0 rounded-full bg-[#EBF7E6] px-2 py-0.5 text-[9px] font-semibold text-[#2E844A]">7 views</span>
+          </div>
+          <p class="mt-2.5 text-[11px] leading-relaxed text-[#514F4D]" id="spLead360SummaryText">Sharvari entered through the Global Exec Leadership campaign and is showing high intent: four website visits, an email opened twice, and a WhatsApp brochure awaiting a read. RevSpot AI verified her 8 years as an Engineering Delivery Manager at County Cities Infotech; enrichment confirms a strong professional fit for VIT's Jan 2027 weekend MBA cohort. Her 82/100 score indicates a strong fit for an initial counsellor conversation.</p>
+          <p class="mt-2 flex items-start gap-1.5 border-t border-[#D8E9F8] pt-2 text-[10px] leading-snug text-[#8C4B00]" id="spLead360NextAction"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FE8F10]"></span><span><strong class="font-semibold">Next action:</strong> Make the first counsellor call to confirm weekend availability, career goals, and zero-cost EMI interest.</span></p>
+        </button>
+
+        <!-- Highlights Detail Row (SLDS Highlights Panel) -->
+        <div class="grid grid-cols-1 gap-x-4 gap-y-3 text-xs sm:grid-cols-2" id="leadHighlightsGrid">
         
         <!-- Detail Block 1: Operating Status -->
-        <div class="space-y-1.5 xl:border-r border-[#DDDBDA] xl:pr-5">
+        <div class="space-y-1.5 border-r border-[#DDDBDA] pr-4" id="operatingStatusHighlight">
           <p class="text-[10px] font-bold uppercase tracking-wider text-[#706E6B]">Operating Status</p>
           <div id="leadGlanceMetaRow">
             <div id="firstCallGlanceMeta" class="space-y-1">
@@ -616,7 +646,7 @@
         </div>
 
         <!-- Detail Block 2: Program & Cohort -->
-        <div class="space-y-1.5 xl:border-r border-[#DDDBDA] xl:pr-5">
+        <div class="space-y-1.5" id="programCohortHighlight">
           <p class="text-[10px] font-bold uppercase tracking-wider text-[#706E6B]">Program &amp; Cohort</p>
           <p class="font-bold text-[#0176D3] text-xs leading-snug">Master of Business Administration</p>
           <div class="flex flex-wrap items-center gap-1.5 text-[11px] text-[#514F4D]">
@@ -626,7 +656,7 @@
         </div>
 
         <!-- Detail Block 3: Lead Freshness & Age -->
-        <div class="space-y-1.5 xl:border-r border-[#DDDBDA] xl:pr-5">
+        <div class="space-y-1.5 border-r border-[#DDDBDA] pr-4" id="leadFreshnessHighlight">
           <p class="text-[10px] font-bold uppercase tracking-wider text-[#706E6B]">Lead Freshness & Age</p>
           <div class="flex items-center gap-2">
             <span class="slds-badge bg-[#FEF3D6] text-[#8C4B00] border border-[#DDDBDA] text-xs font-semibold" id="leadAgeBadge">
@@ -640,7 +670,7 @@
         </div>
 
         <!-- Detail Block 3: Lead Score -->
-        <div class="space-y-1.5 xl:border-r border-[#DDDBDA] xl:pr-5">
+        <div class="space-y-1.5" id="leadScoreHighlight">
           <p class="text-[10px] font-bold uppercase tracking-wider text-[#706E6B]">Lead Score</p>
           <div class="flex items-center gap-2">
             <span class="slds-badge bg-[#E3F3FF] text-[#014486] border border-[#0176D3]/30 text-xs font-bold">
@@ -654,7 +684,7 @@
         </div>
 
         <!-- Detail Block 4: Primary Channels -->
-        <div class="space-y-1.5">
+        <div class="hidden space-y-1.5" id="primaryChannelsHighlight">
           <p class="text-[10px] font-bold uppercase tracking-wider text-[#706E6B]">Primary Channels</p>
           <div class="flex items-center gap-2 text-xs font-mono font-bold text-[#0176D3] whitespace-nowrap">
             <svg class="w-3.5 h-3.5 text-[#0176D3] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -679,6 +709,7 @@
           </p>
         </div>
 
+        </div>
       </div>
 
     </div>
@@ -686,7 +717,7 @@
     <!-- ========================================================= -->
     <!-- SYSTEM-MANAGED LEAD JOURNEY                               -->
     <!-- ========================================================= -->
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(360px,0.7fr)_minmax(0,1.3fr)] gap-3">
+    <div class="hidden" id="lead360JourneyGrid">
       <button type="button" onclick="open360DetailsModal('all')" class="w-full text-left bg-white border border-[#DDDBDA] rounded px-3 py-2.5 shadow-xs hover:border-[#0176D3] hover:shadow-sm transition group" aria-label="Open Lead 360 degree Intelligence and Origin details">
         <div class="flex items-center justify-between gap-3">
           <div class="flex items-center gap-2.5 min-w-0">
@@ -719,7 +750,7 @@
         </div>
       </button>
 
-      <section class="bg-white border border-[#DDDBDA] rounded px-3 py-2.5 shadow-xs" aria-labelledby="leadJourneyTitle">
+      <section class="hidden bg-white border border-[#DDDBDA] rounded px-3 py-2.5 shadow-xs" id="leadJourneyWorkspace" aria-labelledby="leadJourneyTitle">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#F3F3F3]">
         <div class="flex items-center gap-2">
           <span class="w-7 h-7 rounded bg-[#0176D3]/10 text-[#0176D3] flex items-center justify-center">
@@ -1611,7 +1642,7 @@
     </article>
 <!-- WORKSPACE 2-COLUMN GRID (KNOW YOUR PROSPECT & HISTORY VS CALL OUTCOME) -->
     <!-- ========================================================= -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+    <div class="grid grid-cols-1 gap-4 items-stretch lg:grid-cols-[52px_minmax(0,1fr)_minmax(0,1fr)]" id="spWorkspaceGrid">
       
       <!-- LEFT 8 COLS: PROSPECT QUALIFICATION & LEAD HISTORY -->
       <div class="grid h-full grid-cols-1 gap-4 lg:contents">
@@ -1620,7 +1651,7 @@
         <!-- SECTION 4: KNOW YOUR PROSPECT (First Scroll) - SLDS CARD    -->
         <!-- Expanded by default for First Call · Collapsed for Subsequent Calls -->
         <!-- ========================================================= -->
-        <article class="slds-card h-full bg-white border border-[#DDDBDA] rounded shadow-2xs overflow-hidden flex flex-col lg:col-span-4" id="sectionKnowYourProspect">
+        <article class="slds-card h-full bg-white border border-[#DDDBDA] rounded shadow-2xs overflow-hidden flex flex-col lg:col-span-1 lg:order-2" id="sectionKnowYourProspect">
           <div class="slds-card__header slds-grid px-3 pt-3 pb-2 sm:px-3.5 sm:pt-3.5 sm:pb-2 bg-white border-b border-[#DDDBDA] flex items-center justify-between">
             <div class="slds-media slds-media_center slds-has-flexi-truncate flex items-center gap-2.5">
               <div class="slds-media__figure">
@@ -1758,20 +1789,23 @@
         <!-- ========================================================= -->
         <!-- SECTION 5: LEAD HISTORY & NOTES (SLDS CARD)               -->
         <!-- ========================================================= -->
-        <article class="slds-card min-h-0 bg-white border border-[#DDDBDA] rounded shadow-2xs p-3 sm:p-3.5 flex h-full flex-col lg:col-span-4" id="sectionLeadHistory">
-          <div class="slds-card__header slds-grid p-0 pb-2 border-b border-[#DDDBDA] flex flex-wrap items-center justify-between gap-2">
-            <div class="slds-media slds-media_center slds-has-flexi-truncate flex items-center gap-2">
-              <span class="slds-icon_container slds-icon-standard-task-custom w-8 h-8 rounded flex items-center justify-center text-white shadow-2xs" title="History">
+        <article class="slds-card w-fit self-start bg-white border border-[#DDDBDA] rounded shadow-2xs p-2 flex flex-col lg:col-span-1 lg:order-1" id="sectionLeadHistory">
+          <div class="slds-card__header slds-grid p-0 flex flex-wrap items-center justify-center gap-2" id="leadActivityTrailHeader">
+            <div class="slds-media slds-media_center slds-has-flexi-truncate flex flex-col items-center gap-2" id="leadActivityTrailMedia">
+              <button type="button" id="leadActivityTrailToggle" onclick="toggleLeadActivityTrail()" class="slds-icon_container slds-icon-standard-task-custom w-8 h-8 rounded flex items-center justify-center text-white shadow-2xs cursor-pointer transition hover:brightness-95" title="Engagement Timeline — expand" aria-label="Expand engagement timeline" aria-expanded="false">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-              </span>
-              <div>
+              </button>
+              <div class="flex items-center justify-center" id="leadActivityTrailCompactTitle">
+                <span class="slds-card__header-title whitespace-nowrap text-xs font-bold text-[#080707] uppercase tracking-wider" style="writing-mode: vertical-rl; transform: rotate(180deg);">Engagement Timeline</span>
+              </div>
+              <div class="hidden" id="leadActivityTrailTitle">
                 <h3 class="slds-card__header-title text-xs font-bold text-[#080707] uppercase tracking-wider">
-                  Lead Activity Trail
+                  Engagement Timeline
                 </h3>
               </div>
             </div>
 
-            <div class="slds-no-flex ml-auto flex items-center gap-2">
+            <div class="slds-no-flex ml-auto hidden items-center gap-2" id="leadActivityTrailTimestamp">
               <span class="text-[10px] text-[#706E6B]" id="descriptionTimestamp">Updated 10:20 AM</span>
             </div>
           </div>
@@ -1827,7 +1861,7 @@
             </div>
           </div>
 
-          <ol class="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto rounded border border-[#E5E5E5] bg-[#FBFCFE] divide-y divide-[#E5E5E5]" aria-label="Lead activity trail">
+          <ol class="hidden mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto rounded border border-[#E5E5E5] bg-[#FBFCFE] divide-y divide-[#E5E5E5]" id="leadActivityTrailList" aria-label="Engagement timeline">
             <li class="flex flex-1 min-w-0 items-center gap-2.5 bg-[#FFFDF8] px-3 py-2.5">
               <span class="h-2 w-2 shrink-0 rounded-full bg-[#FE8F10] ring-2 ring-[#FDE7C2]"></span>
               <span class="min-w-0 text-[11px] leading-snug text-[#514F4D]"><strong class="block text-[10px] font-bold uppercase tracking-wide text-[#8C4B00]">Next · Callback due</strong><span class="block">Today, 04:00 PM</span><span class="mt-1 block text-[10px] leading-relaxed text-[#8C4B00]">Discuss the weekend batch schedule and zero-cost EMI availability. Capture the call outcome, lead status and sub-status after the conversation.</span></span>
@@ -1878,7 +1912,7 @@
     </div>
     <!-- RIGHT 4 COLS: CALL OUTCOME & SAVE VALIDATION PANEL -->
       <!-- Enforces mandatory capture according to Section 5 Rules -->
-      <div class="lg:col-span-4 flex h-full flex-col">
+      <div class="lg:col-span-1 flex h-full flex-col lg:order-3" id="sectionCallOutcome">
         
         <article class="slds-card h-full bg-white border border-[#DDDBDA] rounded shadow-2xs p-3 sm:p-3.5 sticky top-20">
           <div class="slds-card__header slds-grid p-0 pb-2 border-b border-[#DDDBDA] mb-3 flex items-center justify-between">
@@ -1990,34 +2024,19 @@
                 <p class="text-[11px] text-[#706E6B] mt-0.5" id="followUpHelperText">Must capture structured date/time for scheduled callbacks.</p>
               </div>
 
-              <!-- Follow-up Comments (Mandatory when follow-up is required) -->
-              <div class="slds-form-element" id="followUpCommentsContainer">
-                <label class="slds-form-element__label text-xs font-bold text-[#080707] mb-1 block" for="outcomeFollowUpComments">
-                  Follow-up Comments <span class="text-[#EA001E]" id="followUpCommentsReqAsterisk">*</span>
-                </label>
-                <div class="slds-form-element__control">
-                  <input 
-                    type="text" 
-                    id="outcomeFollowUpComments" 
-                    placeholder="State why/what is to be done during next conversation..." 
-                    class="slds-input text-xs bg-[#F8F9FA] border border-[#DDDBDA] rounded p-2 text-[#080707] w-full"
-                  />
-                </div>
-              </div>
-
-              <!-- Description / Call Notes (Mandatory for meaningful connected) -->
+              <!-- Single shared field for conversation notes and the follow-up plan -->
               <div class="slds-form-element" id="callNotesContainer">
                 <div class="flex items-center justify-between mb-1">
                   <label class="slds-form-element__label text-xs font-bold text-[#080707]" id="callNotesLabel" for="outcomeNotes">
-                    Description / Call Notes <span class="text-[#EA001E]" id="callNotesReqAsterisk">*</span>
+                    Call Notes &amp; Follow-up Plan <span class="text-[#EA001E]" id="callNotesReqAsterisk">*</span>
                   </label>
-                  <span class="text-[10px] text-[#706E6B]" id="notesHelperBadge">Mandatory on Connected</span>
+                  <span class="text-[10px] text-[#706E6B]" id="notesHelperBadge">Required for connected outcomes</span>
                 </div>
                 <div class="slds-form-element__control">
                   <textarea 
                     id="outcomeNotes" 
                     rows="3" 
-                    placeholder="Summary of conversation, prospect feedback, and next steps..." 
+                    placeholder="Summarize the conversation, agreed follow-up, prospect feedback, and next steps..."
                     class="slds-textarea text-xs bg-[#F8F9FA] border border-[#DDDBDA] rounded p-2 text-[#080707] w-full"
                   ></textarea>
                 </div>
@@ -4838,7 +4857,7 @@
         <div class="flex items-center justify-between pb-4 border-b border-[#DDDBDA] mb-6">
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-[#0176D3]"></span>
-            <h2 class="text-sm font-bold text-[#080707] uppercase tracking-wide">Historical Lead Activity Trail</h2>
+            <h2 class="text-sm font-bold text-[#080707] uppercase tracking-wide">Engagement Timeline History</h2>
           </div>
           <span class="text-xs text-[#706E6B]">Sorted: Most Recent First</span>
         </div>
@@ -6333,6 +6352,7 @@ Admissions Office, Emeritus
     // State Variables
     let humanConnectedCallCount = 0; // State Driver: 0 = First Call UX, >=1 = Subsequent Call UX
     let currentUxMode = 'first_call';
+    let currentUserView = 'SP · 1st Call View';
     let totalAttempts = 2; // 1 AI call, 1 unanswered human attempt
     let followUpsCount = 0;
     let callTimerInterval = null;
@@ -6367,18 +6387,210 @@ Admissions Office, Emeritus
       if (button) button.setAttribute('aria-expanded', 'false');
     }
 
+    function toggleUserViewMenu() {
+      const menu = document.getElementById('userViewMenu');
+      const button = document.getElementById('userViewMenuButton');
+      if (!menu || !button) return;
+      const isOpening = menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !isOpening);
+      button.setAttribute('aria-expanded', String(isOpening));
+    }
+
+    function closeUserViewMenu() {
+      const menu = document.getElementById('userViewMenu');
+      const button = document.getElementById('userViewMenuButton');
+      if (menu) menu.classList.add('hidden');
+      if (button) button.setAttribute('aria-expanded', 'false');
+    }
+
+    function selectUserView(viewName) {
+      currentUserView = viewName;
+      setActiveUserView(viewName);
+      closeUserViewMenu();
+      if (viewName === 'SP · 1st Call View') {
+        switchUxMode('first_call');
+        return;
+      }
+      if (viewName === 'SP · Subsequent Call View') {
+        switchUxMode('subsequent_call');
+        return;
+      }
+      showToast(`${viewName} selected`);
+    }
+
+    function setActiveUserView(viewName) {
+      const label = document.getElementById('activeUserViewLabel');
+      if (label) label.innerText = viewName;
+      document.querySelectorAll('[data-user-view]').forEach(option => {
+        const isSelected = option.dataset.userView === viewName;
+        option.className = isSelected
+          ? 'flex w-full items-center gap-2.5 bg-[#F8FBFE] px-3 py-2 text-left text-[11px] font-medium text-[#0176D3] hover:bg-[#EAF5FE] cursor-pointer'
+          : 'flex w-full items-center gap-2.5 px-3 py-2 text-left text-[11px] font-medium text-[#514F4D] hover:bg-[#F8F9FA] cursor-pointer';
+        option.setAttribute('aria-current', isSelected ? 'true' : 'false');
+      });
+      applyUserViewLayout(viewName);
+    }
+
+    function applyUserViewLayout(viewName) {
+      const isSpView = viewName.startsWith('SP');
+      const primaryChannels = document.getElementById('primaryChannelsHighlight');
+      const highlightsGrid = document.getElementById('leadHighlightsGrid');
+      const insightsLayout = document.getElementById('spLeadInsightsLayout');
+      const lead360Summary = document.getElementById('spLead360Summary');
+      const operatingStatusHighlight = document.getElementById('operatingStatusHighlight');
+      const programCohortHighlight = document.getElementById('programCohortHighlight');
+      const leadFreshnessHighlight = document.getElementById('leadFreshnessHighlight');
+      const leadScoreHighlight = document.getElementById('leadScoreHighlight');
+      const journey = document.getElementById('leadJourneyWorkspace');
+      const lead360JourneyGrid = document.getElementById('lead360JourneyGrid');
+      const activityTrail = document.getElementById('sectionLeadHistory');
+      const prospect = document.getElementById('sectionKnowYourProspect');
+      const outcomeColumn = document.getElementById('sectionCallOutcome');
+
+      if (primaryChannels) primaryChannels.classList.toggle('hidden', isSpView);
+      if (insightsLayout) {
+        insightsLayout.className = isSpView
+          ? 'mt-4 grid grid-cols-1 gap-4 border-t border-[#DDDBDA] pt-4 xl:grid-cols-[minmax(420px,1.15fr)_minmax(0,1fr)]'
+          : 'mt-4 border-t border-[#DDDBDA] pt-4';
+      }
+      if (lead360Summary) lead360Summary.classList.toggle('hidden', !isSpView);
+      if (highlightsGrid) {
+        highlightsGrid.className = isSpView
+          ? 'grid grid-cols-1 gap-x-4 gap-y-3 text-xs sm:grid-cols-2'
+          : 'grid grid-cols-1 gap-4 text-xs sm:grid-cols-2 xl:grid-cols-5 xl:gap-6';
+      }
+      const spSideClasses = 'space-y-1.5 border-r border-[#DDDBDA] pr-4';
+      const roSideClasses = 'space-y-1.5 xl:border-r border-[#DDDBDA] xl:pr-5';
+      if (operatingStatusHighlight) operatingStatusHighlight.className = isSpView ? spSideClasses : roSideClasses;
+      if (programCohortHighlight) programCohortHighlight.className = isSpView ? 'space-y-1.5' : roSideClasses;
+      if (leadFreshnessHighlight) leadFreshnessHighlight.className = isSpView ? spSideClasses : roSideClasses;
+      if (leadScoreHighlight) {
+        leadScoreHighlight.className = isSpView
+          ? 'space-y-1.5'
+          : 'space-y-1.5 xl:border-r border-[#DDDBDA] xl:pr-5';
+      }
+      if (journey) journey.classList.toggle('hidden', isSpView);
+      if (lead360JourneyGrid) {
+        lead360JourneyGrid.className = isSpView
+          ? 'hidden'
+          : 'grid grid-cols-1 lg:grid-cols-[minmax(360px,0.7fr)_minmax(0,1.3fr)] gap-3';
+      }
+
+      if (activityTrail) activityTrail.classList.toggle('lg:order-1', isSpView);
+      if (prospect) prospect.classList.toggle('lg:order-2', isSpView);
+      if (outcomeColumn) outcomeColumn.classList.toggle('lg:order-3', isSpView);
+
+      setLeadActivityTrailExpanded(!isSpView);
+    }
+
+    function setLeadActivityTrailExpanded(isExpanded) {
+      const card = document.getElementById('sectionLeadHistory');
+      const list = document.getElementById('leadActivityTrailList');
+      const toggle = document.getElementById('leadActivityTrailToggle');
+      const header = document.getElementById('leadActivityTrailHeader');
+      const media = document.getElementById('leadActivityTrailMedia');
+      const title = document.getElementById('leadActivityTrailTitle');
+      const compactTitle = document.getElementById('leadActivityTrailCompactTitle');
+      const timestamp = document.getElementById('leadActivityTrailTimestamp');
+      const prospect = document.getElementById('sectionKnowYourProspect');
+      const outcomeColumn = document.getElementById('sectionCallOutcome');
+      const workspaceGrid = document.getElementById('spWorkspaceGrid');
+      const isSpView = currentUserView.startsWith('SP');
+      if (!card || !list || !toggle || !header || !media || !title || !compactTitle || !timestamp) return;
+
+      list.classList.toggle('hidden', !isExpanded);
+      card.classList.toggle('h-full', isExpanded);
+      card.classList.toggle('min-h-0', isExpanded);
+      card.classList.toggle('self-start', !isExpanded);
+      card.classList.toggle('w-fit', !isExpanded);
+      card.classList.toggle('w-full', isExpanded);
+      card.classList.toggle('p-2', !isExpanded);
+      card.classList.toggle('p-3', isExpanded);
+      card.classList.toggle('sm:p-3.5', isExpanded);
+
+      header.classList.toggle('pb-2', isExpanded);
+      header.classList.toggle('border-b', isExpanded);
+      header.classList.toggle('border-[#DDDBDA]', isExpanded);
+      header.classList.toggle('justify-between', isExpanded);
+      header.classList.toggle('justify-center', !isExpanded);
+      media.classList.toggle('flex-row', isExpanded);
+      media.classList.toggle('flex-col', !isExpanded);
+      title.classList.toggle('hidden', !isExpanded);
+      compactTitle.classList.toggle('hidden', isExpanded);
+      if (isExpanded) {
+        timestamp.classList.remove('hidden');
+        timestamp.classList.add('flex');
+      } else {
+        timestamp.classList.add('hidden');
+        timestamp.classList.remove('flex');
+      }
+
+      [card, prospect, outcomeColumn].forEach(block => {
+        if (!block) return;
+        block.classList.remove('lg:col-span-1', 'lg:col-span-4', 'lg:col-span-5', 'lg:col-span-6');
+      });
+      if (workspaceGrid) {
+        workspaceGrid.className = isSpView && !isExpanded
+          ? 'grid grid-cols-1 gap-4 items-stretch lg:grid-cols-[52px_minmax(0,1fr)_minmax(0,1fr)]'
+          : 'grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch';
+      }
+      if (isSpView && !isExpanded) {
+        card.classList.add('lg:col-span-1');
+        if (prospect) prospect.classList.add('lg:col-span-1');
+        if (outcomeColumn) outcomeColumn.classList.add('lg:col-span-1');
+      } else {
+        card.classList.add('lg:col-span-4');
+        if (prospect) prospect.classList.add('lg:col-span-4');
+        if (outcomeColumn) outcomeColumn.classList.add('lg:col-span-4');
+      }
+      toggle.setAttribute('aria-expanded', String(isExpanded));
+      toggle.setAttribute('aria-label', isExpanded ? 'Collapse engagement timeline' : 'Expand engagement timeline');
+      toggle.setAttribute('title', isExpanded ? 'Collapse engagement timeline' : 'Expand engagement timeline');
+    }
+
+    function toggleLeadActivityTrail() {
+      if (!currentUserView.startsWith('SP')) return;
+      const list = document.getElementById('leadActivityTrailList');
+      if (!list) return;
+      setLeadActivityTrailExpanded(list.classList.contains('hidden'));
+    }
+
+    function updateSpLead360Summary(mode) {
+      const meta = document.getElementById('spLead360SummaryMeta');
+      const summary = document.getElementById('spLead360SummaryText');
+      const nextAction = document.getElementById('spLead360NextAction');
+      if (!meta || !summary || !nextAction) return;
+
+      if (mode === 'subsequent_call') {
+        meta.innerText = 'Conversation follow-up brief from 7 intelligence views';
+        summary.innerText = "Sharvari responded positively to the campaign and engagement outreach; the AI qualification call confirmed her Engineering Delivery Manager role, 8 years of experience, and interest in VIT's Jan 2027 weekend MBA cohort. The prior conversation moved the lead to In Discussion, with a strong 82/100 score, a brochure delivered on WhatsApp, and a callback scheduled in the call trail.";
+        nextAction.innerHTML = '<span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FE8F10]"></span><span><strong class="font-semibold">Next action:</strong> Use the 04:00 PM callback to resolve weekend schedule fit, answer financing questions, and capture the updated status and sub-status.</span>';
+      } else {
+        meta.innerText = 'First-call context from 7 intelligence views';
+        summary.innerText = "Sharvari entered through the Global Exec Leadership campaign and is showing high intent: four website visits, an email opened twice, and a WhatsApp brochure awaiting a read. RevSpot AI verified her 8 years as an Engineering Delivery Manager at County Cities Infotech; enrichment confirms a strong professional fit for VIT's Jan 2027 weekend MBA cohort. Her 82/100 score indicates a strong fit for an initial counsellor conversation.";
+        nextAction.innerHTML = '<span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FE8F10]"></span><span><strong class="font-semibold">Next action:</strong> Make the first counsellor call to confirm weekend availability, career goals, and zero-cost EMI interest.</span>';
+      }
+    }
+
     document.addEventListener('click', function(event) {
       const notificationArea = document.getElementById('leadActivityNotificationArea');
       if (notificationArea && !notificationArea.contains(event.target)) closeLeadActivityNotifications();
+      const userViewMenuArea = document.getElementById('userViewMenuArea');
+      if (userViewMenuArea && !userViewMenuArea.contains(event.target)) closeUserViewMenu();
     });
 
     // UX Mode Switcher (First Call vs Subsequent Call)
     function switchUxMode(mode) {
       currentUxMode = mode;
+      if (currentUserView.startsWith('SP')) {
+        currentUserView = mode === 'first_call' ? 'SP · 1st Call View' : 'SP · Subsequent Call View';
+        setActiveUserView(currentUserView);
+      }
       
       const btnFirst = document.getElementById('toggleFirstCallBtn');
       const btnSub = document.getElementById('toggleSubsequentBtn');
       const modeLabel = document.getElementById('currentUxModeLabel');
+      const connectedCallCountDisplay = document.getElementById('connectedCallCountDisplay');
       const statePill = document.getElementById('leadStatePill');
       
       // Glance Sections
@@ -6405,11 +6617,11 @@ Admissions Office, Emeritus
 
       if (mode === 'first_call') {
         humanConnectedCallCount = 0;
-        document.getElementById('connectedCallCountDisplay').innerText = "0";
+        if (connectedCallCountDisplay) connectedCallCountDisplay.innerText = "0";
 
-        btnFirst.className = "slds-button slds-button_brand text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition";
-        btnSub.className = "slds-button slds-button_neutral text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition bg-transparent text-[#514F4D] border-none hover:bg-white";
-        modeLabel.innerText = "First Call UX";
+        if (btnFirst) btnFirst.className = "slds-button slds-button_brand text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition";
+        if (btnSub) btnSub.className = "slds-button slds-button_neutral text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition bg-transparent text-[#514F4D] border-none hover:bg-white";
+        if (modeLabel) modeLabel.innerText = "First Call UX";
         statePill.className = "slds-badge bg-[#EBF7E6] text-[#2E844A] text-xs font-bold shrink-0";
         statePill.innerText = "First Call UX (0 Human Calls)";
 
@@ -6436,6 +6648,7 @@ Admissions Office, Emeritus
         outcomeTitle.innerText = "Log First Call Outcome";
         outcomeModeBadge.innerText = "1st Call Validation";
         outcomeModeBadge.className = "slds-badge bg-[#EBF7E6] text-[#2E844A] text-[10px] font-bold";
+        updateSpLead360Summary('first_call');
 
         const callIndicator = document.getElementById('humanCallIndicatorText');
         if (callIndicator) callIndicator.innerText = "0 human-connected calls logged";
@@ -6443,14 +6656,14 @@ Admissions Office, Emeritus
         showToast("Switched to First Call UX (Orient → Verify → Qualify → Outcome)");
       } else {
         if (humanConnectedCallCount === 0) humanConnectedCallCount = 1;
-        document.getElementById('connectedCallCountDisplay').innerText = String(humanConnectedCallCount);
+        if (connectedCallCountDisplay) connectedCallCountDisplay.innerText = String(humanConnectedCallCount);
 
         const callIndicator = document.getElementById('humanCallIndicatorText');
         if (callIndicator) callIndicator.innerText = `${humanConnectedCallCount} human-connected calls logged`;
 
-        btnSub.className = "slds-button slds-button_brand text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition";
-        btnFirst.className = "slds-button slds-button_neutral text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition bg-transparent text-[#514F4D] border-none hover:bg-white";
-        modeLabel.innerText = "Subsequent Call UX";
+        if (btnSub) btnSub.className = "slds-button slds-button_brand text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition";
+        if (btnFirst) btnFirst.className = "slds-button slds-button_neutral text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer transition bg-transparent text-[#514F4D] border-none hover:bg-white";
+        if (modeLabel) modeLabel.innerText = "Subsequent Call UX";
         statePill.className = "slds-badge bg-[#FEF1EE] text-[#932506] text-xs font-bold shrink-0";
         statePill.innerText = `Subsequent Call UX (${humanConnectedCallCount} Human Calls)`;
 
@@ -6478,6 +6691,7 @@ Admissions Office, Emeritus
         outcomeTitle.innerText = "Update Subsequent Call Outcome";
         outcomeModeBadge.innerText = "Subsequent Call Validation";
         outcomeModeBadge.className = "slds-badge bg-[#FEF1EE] text-[#932506] text-[10px] font-bold";
+        updateSpLead360Summary('subsequent_call');
 
         showToast("Switched to Subsequent Call UX (Recall → What's Next → Action)");
       }
@@ -6692,7 +6906,6 @@ Admissions Office, Emeritus
       const productionDisposition = document.getElementById('callOutcomeDisposition')?.value;
       const productionStatusSelect = document.getElementById('outcomeLeadStatus');
       const productionFollowUpContainer = document.getElementById('nextFollowUpContainer');
-      const productionFollowUpCommentsContainer = document.getElementById('followUpCommentsContainer');
       const productionNotesAsterisk = document.getElementById('callNotesReqAsterisk');
       const productionNotesHelper = document.getElementById('notesHelperBadge');
       const productionSaveButtonText = document.getElementById('saveOutcomeBtnText');
@@ -6715,11 +6928,10 @@ Admissions Office, Emeritus
       const requiresFollowUp = productionDisposition === 'callback' || productionDisposition === 'connected';
       const requiresNotes = productionDisposition !== 'no-answer' && productionDisposition !== 'invalid-number';
       if (productionFollowUpContainer) productionFollowUpContainer.classList.toggle('hidden', !requiresFollowUp);
-      if (productionFollowUpCommentsContainer) productionFollowUpCommentsContainer.classList.toggle('hidden', !requiresFollowUp);
       if (productionNotesAsterisk) productionNotesAsterisk.classList.toggle('hidden', !requiresNotes);
 
       if (productionNotesHelper) {
-        productionNotesHelper.innerText = productionDisposition === 'no-answer' ? 'Optional for No Answer' : productionDisposition === 'invalid-number' ? 'Optional for Invalid Number' : productionDisposition === 'not-interested' ? 'Mandatory Reason' : 'Mandatory';
+        productionNotesHelper.innerText = productionDisposition === 'no-answer' ? 'Optional for No Answer' : productionDisposition === 'invalid-number' ? 'Optional for Invalid Number' : productionDisposition === 'not-interested' ? 'Document the reason' : productionDisposition === 'callback' ? 'Include the agreed follow-up plan' : 'Required for connected outcome';
       }
       if (productionSaveButtonText) {
         productionSaveButtonText.innerText = productionDisposition === 'no-answer' ? 'Log Unanswered Attempt (No Notes Required)' : productionDisposition === 'invalid-number' ? 'Save Invalid Contact Outcome' : productionDisposition === 'not-interested' ? 'Save Not Interested & Reason' : productionDisposition === 'callback' ? 'Save Callback & Set Next Follow-Up' : 'Save Connected Outcome & Progression';
@@ -6733,11 +6945,9 @@ Admissions Office, Emeritus
       const statusSelect = document.getElementById('outcomeLeadStatus');
       const subStatusContainer = document.getElementById('subStatusContainer');
       const followUpContainer = document.getElementById('nextFollowUpContainer');
-      const followUpCommentsContainer = document.getElementById('followUpCommentsContainer');
       const callNotesContainer = document.getElementById('callNotesContainer');
       
       const followUpTimeInput = document.getElementById('outcomeFollowUpTime');
-      const followUpCommentsInput = document.getElementById('outcomeFollowUpComments');
       const notesInput = document.getElementById('outcomeNotes');
       const saveBtnText = document.getElementById('saveOutcomeBtnText');
       const errBox = document.getElementById('validationErrorBox');
@@ -6748,7 +6958,6 @@ Admissions Office, Emeritus
         statusSelect.value = "Unreachable";
         subStatusContainer.classList.add('hidden');
         followUpContainer.classList.add('hidden');
-        followUpCommentsContainer.classList.add('hidden');
         document.getElementById('callNotesReqAsterisk').classList.add('hidden');
         document.getElementById('notesHelperBadge').innerText = "Optional for No Answer";
         saveBtnText.innerText = "Log Unanswered Attempt (No Notes Required)";
@@ -6762,7 +6971,6 @@ Admissions Office, Emeritus
           <option value="Invalid Contact">No Longer at Company / Inactive</option>
         `;
         followUpContainer.classList.add('hidden');
-        followUpCommentsContainer.classList.add('hidden');
         document.getElementById('callNotesReqAsterisk').classList.add('hidden');
         document.getElementById('notesHelperBadge').innerText = "Optional for Invalid Number";
         saveBtnText.innerText = "Save Invalid Contact Outcome";
@@ -6778,7 +6986,6 @@ Admissions Office, Emeritus
           <option value="Not Looking to Upskill">Not Looking to Upskill</option>
         `;
         followUpContainer.classList.add('hidden');
-        followUpCommentsContainer.classList.add('hidden');
         document.getElementById('callNotesReqAsterisk').classList.remove('hidden');
         document.getElementById('notesHelperBadge').innerText = "Mandatory Reason";
         saveBtnText.innerText = "Save Not Interested & Reason";
@@ -6793,7 +7000,6 @@ Admissions Office, Emeritus
           <option value="Reviewing Zero-Cost EMI">Reviewing Zero-Cost EMI</option>
         `;
         followUpContainer.classList.remove('hidden');
-        followUpCommentsContainer.classList.remove('hidden');
         document.getElementById('callNotesReqAsterisk').classList.remove('hidden');
         document.getElementById('notesHelperBadge').innerText = "Mandatory";
         saveBtnText.innerText = "Save Callback & Set Next Follow-Up";
@@ -6814,7 +7020,6 @@ Admissions Office, Emeritus
           <option value="Seat Reservation Ready">Seat Reservation Ready</option>
         `;
         followUpContainer.classList.remove('hidden');
-        followUpCommentsContainer.classList.remove('hidden');
         document.getElementById('callNotesReqAsterisk').classList.remove('hidden');
         document.getElementById('notesHelperBadge').innerText = "Mandatory";
         saveBtnText.innerText = "Save Connected Outcome & Progression";
@@ -6832,8 +7037,8 @@ Admissions Office, Emeritus
       const status = document.getElementById('outcomeLeadStatus').value;
       const subStatus = document.getElementById('outcomeLeadSubStatus').value;
       const followUpTime = document.getElementById('outcomeFollowUpTime').value;
-      const followUpComments = document.getElementById('outcomeFollowUpComments').value.trim();
       const notes = document.getElementById('outcomeNotes').value.trim();
+      const followUpComments = notes;
       
       const errBox = document.getElementById('validationErrorBox');
       const errMsg = document.getElementById('validationErrorMessage');
@@ -6855,7 +7060,7 @@ Admissions Office, Emeritus
       if (disp === 'connected' || disp === 'callback') {
         if (!notes) {
           errBox.classList.remove('hidden');
-          errMsg.innerText = "Validation Error: Description / Call Notes are mandatory for a connected conversation.";
+          errMsg.innerText = "Validation Error: Add the call notes and agreed follow-up plan for this connected conversation.";
           return;
         }
       }
@@ -6864,11 +7069,6 @@ Admissions Office, Emeritus
         if (!followUpTime) {
           errBox.classList.remove('hidden');
           errMsg.innerText = "Validation Error: Next Follow-up Date/Time is strictly required for a callback outcome.";
-          return;
-        }
-        if (!followUpComments) {
-          errBox.classList.remove('hidden');
-          errMsg.innerText = "Validation Error: Follow-up Comments stating what must be done next are mandatory.";
           return;
         }
       }
@@ -7259,6 +7459,7 @@ Admissions Office, Emeritus
         closeCounsellorNotesModal();
         closeWhatsAppModal();
         closeLeadActivityNotifications();
+        closeUserViewMenu();
       }
     });
 
